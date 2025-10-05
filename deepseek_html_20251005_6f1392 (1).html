@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Stories - NASA 2025 Space Apps Challenge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4facfe;
+            --secondary: #00f2fe;
+            --dark-bg: #0b0b2d;
+            --medium-bg: #1a1a4a;
+            --light-text: #e0e0ff;
+            --accent: #a0a0ff;
+            --font-size: 16px;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg), var(--medium-bg));
+            color: var(--light-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: var(--font-size);
+        }
+        
+        .high-contrast {
+            --primary: #00ffff;
+            --secondary: #ffff00;
+            --dark-bg: #000000;
+            --medium-bg: #111111;
+            --light-text: #ffffff;
+            --accent: #ff9900;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            height: 60px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+        }
+        
+        .accessibility-tools {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .accessibility-btn {
+            background: rgba(30, 30, 70, 0.7);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--light-text);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .accessibility-btn:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .story-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .control-btn {
+            background: rgba(30, 30, 70, 0.7);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--light-text);
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .control-btn:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .control-btn.active {
+            background: rgba(79, 172, 254, 0.3);
+            border-color: var(--secondary);
+        }
+        
+        .control-btn i {
+            font-size: 1.3rem;
+        }
+        
+        .story-display {
+            background: rgba(20, 20, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            min-height: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+        }
+        
+        .story-content {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .active-content {
+            display: block;
+        }
+        
+        .story-selection {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .story-option {
+            background: rgba(30, 30, 70, 0.7);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--light-text);
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .story-option:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .story-option.active {
+            background: rgba(79, 172, 254, 0.3);
+            border-color: var(--secondary);
+        }
+        
+        .text-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .text-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .video-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .video-content iframe {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            border-radius: 10px;
+            border: none;
+            margin: 0 auto;
+        }
+        
+        .image-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .image-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .image-caption {
+            font-style: italic;
+            color: var(--accent);
+            text-align: center;
+            max-width: 800px;
+        }
+        
+        .language-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .language-option {
+            background: rgba(30, 30, 70, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            text-align: center;
+        }
+        
+        .language-option:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .language-option.active {
+            background: rgba(79, 172, 254, 0.3);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .language-flag {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .language-option h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .language-option p {
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+        
+        .current-language {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(30, 30, 70, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(79, 172, 254, 0.3);
+        }
+        
+        .current-language span {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--accent);
+            border-top: 1px solid rgba(79, 172, 254, 0.3);
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        .planets-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 40s infinite linear;
+        }
+        
+        .planet-1 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 30% 30%, #ff9933, #ff6600);
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .planet-2 {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at 30% 30%, #3399ff, #0066cc);
+            top: 60%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+        
+        .planet-3 {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 30% 30%, #ff66cc, #cc3399);
+            bottom: 20%;
+            left: 15%;
+            animation-delay: -20s;
+        }
+        
+        .planet-4 {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #66ff99, #00cc66);
+            top: 30%;
+            right: 20%;
+            animation-delay: -30s;
+        }
+        
+        .planet-5 {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #ffff66, #ffcc00);
+            bottom: 10%;
+            right: 5%;
+            animation-delay: -15s;
+        }
+        
+        .text-to-speech-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tts-btn {
+            background: rgba(30, 30, 70, 0.7);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--light-text);
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tts-btn:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .tts-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .team-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .team-modal-content {
+            background: var(--medium-bg);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
+            border: 2px solid var(--primary);
+        }
+        
+        .team-modal h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        .team-list {
+            list-style-type: none;
+            margin-bottom: 20px;
+        }
+        
+        .team-list li {
+            padding: 10px;
+            border-bottom: 1px solid rgba(79, 172, 254, 0.3);
+            font-size: 1.1rem;
+        }
+        
+        .team-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .team-leader {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .close-modal {
+            background: var(--primary);
+            color: var(--light-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, 50px) rotate(90deg); }
+            50% { transform: translate(100px, 0) rotate(180deg); }
+            75% { transform: translate(50px, -50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .control-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            
+            .story-display {
+                padding: 20px;
+            }
+            
+            .language-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .story-option {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            
+            .planet {
+                display: none;
+            }
+            
+            .planet-1, .planet-2 {
+                display: block;
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .star, .planet {
+                animation: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="planets-container">
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="planet planet-3"></div>
+        <div class="planet planet-4"></div>
+        <div class="planet planet-5"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-rocket" style="color: var(--primary); font-size: 2.5rem;"></i>
+                <h1>Stellar Stories</h1>
+            </div>
+            <p class="subtitle">NASA 2025 Space Apps Challenge - Explore the wonders of the universe</p>
+            
+            <div class="accessibility-tools">
+                <button class="accessibility-btn" id="teamMembersBtn" aria-label="View team members">
+                    <i class="fas fa-users"></i> Team Members
+                </button>
+                <button class="accessibility-btn" id="highContrastBtn" aria-label="Toggle high contrast mode">
+                    <i class="fas fa-adjust"></i> High Contrast
+                </button>
+                <button class="accessibility-btn" id="increaseFontBtn" aria-label="Increase font size">
+                    <i class="fas fa-text-height"></i> Larger Text
+                </button>
+                <button class="accessibility-btn" id="decreaseFontBtn" aria-label="Decrease font size">
+                    <i class="fas fa-text-width"></i> Smaller Text
+                </button>
+                <button class="accessibility-btn" id="readAloudBtn" aria-label="Read page content aloud">
+                    <i class="fas fa-volume-up"></i> Read Aloud
+                </button>
+            </div>
+        </header>
+        
+        <div class="content-area">
+            <div class="story-controls">
+                <button class="control-btn active" id="textBtn" aria-label="View text stories">
+                    <i class="fas fa-file-alt"></i> Text
+                </button>
+                <button class="control-btn" id="videoBtn" aria-label="View space videos">
+                    <i class="fas fa-video"></i> Video
+                </button>
+                <button class="control-btn" id="imageBtn" aria-label="View space images">
+                    <i class="fas fa-image"></i> Images
+                </button>
+                <button class="control-btn" id="languageBtn" aria-label="Change language">
+                    <i class="fas fa-globe"></i> Languages
+                </button>
+            </div>
+            
+            <div class="story-display">
+                <div class="story-content active-content" id="textContent">
+                    <div class="story-selection">
+                        <button class="story-option active" data-story="cosmic_dance" aria-label="Read The Cosmic Dance story">THE COSMIC DANCE</button>
+                        <button class="story-option" data-story="amethyst_promises" aria-label="Read The Amethyst Promises story">THE AMETHYST PROMISES</button>
+                    </div>
+                    
+                    <div class="text-content" id="cosmic_dance">
+                        <h2>THE COSMIC DANCE</h2>
+                        <p>You know, kids, people often think of the universe as a cold, silent, and empty place. But I've never seen it that way. To me, it has always been a grand ballroom, filled with music and movement. And I have one man to thank for that: my old friend, Professor Vega.</p>
+                        <p>I remember it like it was yesterday. I was just a boy, spending most of my evenings in the local planetarium. I was fascinated by the mechanical model of the solar system, with its planets forever circling the lit-up Sun. But that night, I was frustrated. It all seemed so… messy. Why were they all out of sync?</p>
+                        <p>I was so lost in my thoughts that I jumped when I felt a hand on my shoulder. I turned, and there he was. Professor Vega had a way of smiling that made you feel like you were both in on a wonderful secret.</p>
+                        <p>"It's puzzling, isn't it, Akash?" he had said, his eyes crinkling at the corners. "They seem to be moving to different drummers."</p>
+                        <p>"That's just it, Professor!" I'd replied. "Why don't they all just go the same speed? Why are the paths all different?"</p>
+                        <p>He let out a warm, gentle laugh. "Ah, but you are assuming the dance is simple. It is not. It is a symphony. And the distance from the Sun determines each planet's part."</p>
+                        <p>He pointed to Mercury, zipping around the Sun in a frantic blur. "That one," he said, "dances very close to the fire. The Sun's gravity is like a powerful, fast-paced rhythm there. To keep from falling in, Mercury must match that rhythm, spinning through its entire year in the time it takes us to experience three months."</p>
+                        <p>A light went on in my head. "So… the farther out you go, the quieter the music gets?"</p>
+                        <p>"Exactly!" he beamed. "Look at Saturn, so slow and stately. It feels only a faint whisper of that pull, so it can afford to take its time. A single waltz around the Sun takes it nearly thirty of our years."</p>
+                        <p>He then taught me the most beautiful part. "And their paths, Akash, are not perfect circles. They are ellipses—graceful ovals. The Sun is not a strict conductor in the center, but a captivating soloist that the dancers circle. Each planet sways closer, a step called Perihelion, and then farther away, a step called Aphelion. For our Earth, that gentle sway is what gives us our seasons."</p>
+                        <p>I remember the awe that washed over me. The chaos had resolved into a perfect, elegant order. "So, they're all dancing to the same song," I whispered, "but each hears it at a different volume, and that dictates their own unique dance."</p>
+                        <p>"Yes," Professor Vega said, placing a hand on my shoulder. "A never-ending dance of revolution around the ballroom, and a spin of rotation that gives each dancer its own day and night. It is this perfect, delicate balance that makes our life here possible."</p>
+                        <p>I looked back at the model, and I didn't see gears and wires anymore. I saw it. I saw the dance. The planets were partners in a billion-year-old ballet, moving in flawless, gravitational harmony.</p>
+                        <p>So, when you look up at the sky tonight, don't just see silent dots of light. Listen. Listen with your imagination, and you might just hear the music—the same music that taught a confused boy that the universe is not a place of chaos, but of breathtaking, cosmic grace.</p>
+                    </div>
+                    
+                    <div class="text-content" id="amethyst_promises" style="display: none;">
+                        <h2>THE AMETHYST PROMISES</h2>
+                        <p>Narrated by Elara, Chief Archivist of Lyra</p>
+                        <p>You want to know about the Amethyst Promises? Ah, pull up a stool, little one. This isn't just a story in a databank. This is my story. I was there. They used to call me Kaelen.</p>
+                        <p>Back when I was your age, our world, Lyra, was… quiet. Oh, the soil still shimmered copper, and our two moons still painted the sky lavender. But we had lost the echo of our own past. Our technology hummed along with simple green Peridot crystals, but the great ballads of our history? They were fading, like a star going dim.</p>
+                        <p>We had legends, of course. Whispers of the Amethyst Crystals of Promise. It was said they held the entire memory of our planet—every sunrise, every discovery, every struggle. They were our living library. And they were lost.</p>
+                        <p>I was a Stone-Singer. I could hear the music of the rocks, the low hum of the planet's energy. It was a fun trick, until the night it wasn't. I was listening deep in the Copper Canyon, and I heard it—a new song. It wasn't a hum. It was a melody, so beautiful and so profoundly sad that it made my heart ache. It was a call. A distress signal written in music, and it was calling to me.</p>
+                        <p>That's how it started. Me, my best friend Leo—a boy who could talk to computers like they were old friends—and Zara, a fiery young pilot who wasn't afraid of anything, not even the chaotic asteroid graveyard we called "The Drift."</p>
+                        <p>We took the melody to our ship, The Starlight Chaser, and Leo decoded it. His face went pale. "Kaelen," he said, "this isn't just a song. It's a star chart. The Amethysts… they're not here. They're on a moonlet, trapped in The Drift."</p>
+                        <p>I can still feel the chill that ran down my spine. The Drift was a navigator's nightmare, a spinning maze of rock and ice where gravity played cruel tricks. But the song… the promise in that song was a pull stronger than any gravity.</p>
+                        <p>Zara, fearless as ever, took the controls. "Then we'll dance through it," she said, a wild grin on her face.</p>
+                        <p>And dance we did. Leo called out trajectories, using the gravity of the larger asteroids to slingshot us forward. I listened, my ears tuned to the Amethyst's song, guiding Zara through the chaos. The melody was our compass, growing stronger with every near-miss, every dizzying turn. We weren't just flying; we were answering a call that had waited for centuries.</p>
+                        <p>When we finally broke through, the sight stole my breath. There it was—a small, icy moonlet glowing with a soft, internal purple light. We had found the Garden of Memory.</p>
+                        <p>The moment my boots touched the ground, the song didn't just fill my ears; it flooded my mind. I saw it all. I saw Lyra being born from stardust. I saw our ancestors learning to speak to the crystals. I saw them survive cosmic winters and celebrate a thousand summers. The Amethysts weren't just gems; they were a heartbeat. A record of resilience. The "Promise" was their vow to never forget where they came from.</p>
+                        <p>But the song held a final, urgent note. The moonlet's orbit was decaying. It was destined to fall into our sun. Our ancestors hadn't meant for us to save the crystals; they'd meant for us to learn from them and carry their wisdom home before it was too late.</p>
+                        <p>We couldn't take the great crystals. But at my feet lay a small, perfect shard. As I picked it up, the entire garden seemed to sigh, its lonely call finally transforming into a song of fulfillment. The promise had been kept.</p>
+                        <p>So, you see, when you look at the Amethyst shard glowing in the plaza now, you're not just looking at a rock. You're looking at our history. You're looking at a dance through a storm of asteroids, the courage of my friends, and the echo of a song that refused to be forgotten.</p>
+                        <p>That is the true Amethyst Promise. It's the promise that we will always look to the stars, not just to find new worlds, but to remember who we are. And that, little one, is a story worth telling and retelling. Now, off to bed. The stars are waiting in your dreams.</p>
+                    </div>
+                    
+                    <div class="text-to-speech-controls">
+                        <button class="tts-btn" id="playTTS" aria-label="Read current story aloud">
+                            <i class="fas fa-play"></i> Read Story Aloud
+                        </button>
+                        <button class="tts-btn" id="pauseTTS" aria-label="Pause reading" disabled>
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button class="tts-btn" id="stopTTS" aria-label="Stop reading" disabled>
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="story-content" id="videoContent">
+                    <div class="video-content">
+                        <iframe src="https://www.youtube.com/embed/libKVRa01L8" title="Journey to the Andromeda Galaxy" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/0rHUDWjR5gg" title="Hubble Space Telescope Discoveries" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <div class="story-content" id="imageContent">
+                    <div class="image-content">
+                        <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Hubble Space Telescope image of a nebula">
+                        <p class="image-caption">The Carina Nebula: A massive star-forming region in our galaxy where radiation from newborn stars sculpts the surrounding gas and dust into fantastic shapes.</p>
+                        
+                        <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1510&q=80" alt="Galaxy image">
+                        <p class="image-caption">Andromeda Galaxy: Our closest galactic neighbor, on a collision course with the Milky Way in about 4.5 billion years.</p>
+                        
+                        <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Solar System illustration">
+                        <p class="image-caption">The Cosmic Dance: An artistic representation of our solar system showing the elegant orbital paths of planets around the Sun.</p>
+                        
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1494&q=80" alt="Crystal formations">
+                        <p class="image-caption">Crystalline Formations: Inspired by the Amethyst Promises story, these natural crystal structures evoke the memory-holding crystals of Lyra.</p>
+                        
+                        <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1450&q=80" alt="Space image with stars and galaxies">
+                        <p class="image-caption">Deep Space: A view of distant galaxies and star clusters, reminding us of the vastness of our universe.</p>
+                    </div>
+                </div>
+                
+                <div class="story-content" id="languageContent">
+                    <h2 style="text-align: center; color: var(--primary); margin-bottom: 20px;">Select Your Language</h2>
+                    <div class="language-grid">
+                        <div class="language-option active" data-lang="en">
+                            <div class="language-flag">🇺🇸</div>
+                            <h3>English</h3>
+                            <p>Explore stellar stories in English</p>
+                        </div>
+                        <div class="language-option" data-lang="ta">
+                            <div class="language-flag">🇮🇳</div>
+                            <h3>தமிழ் (Tamil)</h3>
+                            <p>விண்மீன் கதைகளைத் தமிழில் ஆராயுங்கள்</p>
+                        </div>
+                        <div class="language-option" data-lang="hi">
+                            <div class="language-flag">🇮🇳</div>
+                            <h3>हिन्दी (Hindi)</h3>
+                            <p>हिंदी में तारकीय कहानियों का अन्वेषण करें</p>
+                        </div>
+                    </div>
+                    
+                    <div class="current-language">
+                        <i class="fas fa-language"></i>
+                        <p>Current Language: <span id="currentLangDisplay">English</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Created for NASA 2025 Space Apps Challenge - Stellar Stories</p>
+            <p>Team: Cosmic Explorers | Members: Space Enthusiasts Worldwide</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">This website is designed with accessibility in mind. Use the tools at the top to customize your experience.</p>
+        </footer>
+    </div>
+
+    <!-- Team Members Modal -->
+    <div class="team-modal" id="teamModal">
+        <div class="team-modal-content">
+            <h2>Our Team Members</h2>
+            <ul class="team-list">
+                <li class="team-leader">TANISH ARJUN - Team Leader (CSE)</li>
+                <li>MUTHURAJ.S (CSE)</li>
+                <li>ARAVIND.T (CSE)</li>
+                <li>ARUL SELVAN R (CSE)</li>
+                <li>THIYAGARAJAN S (CSE)</li>
+            </ul>
+            <button class="close-modal" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Create starry background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3;
+                
+                // Random animation delay
+                const delay = Math.random() * 5;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Language content data
+        const languageData = {
+            en: {
+                cosmic_dance: {
+                    title: "THE COSMIC DANCE",
+                    paragraphs: [
+                        "You know, kids, people often think of the universe as a cold, silent, and empty place. But I've never seen it that way. To me, it has always been a grand ballroom, filled with music and movement. And I have one man to thank for that: my old friend, Professor Vega.",
+                        "I remember it like it was yesterday. I was just a boy, spending most of my evenings in the local planetarium. I was fascinated by the mechanical model of the solar system, with its planets forever circling the lit-up Sun. But that night, I was frustrated. It all seemed so… messy. Why were they all out of sync?",
+                        "I was so lost in my thoughts that I jumped when I felt a hand on my shoulder. I turned, and there he was. Professor Vega had a way of smiling that made you feel like you were both in on a wonderful secret.",
+                        "\"It's puzzling, isn't it, Akash?\" he had said, his eyes crinkling at the corners. \"They seem to be moving to different drummers.\"",
+                        "\"That's just it, Professor!\" I'd replied. \"Why don't they all just go the same speed? Why are the paths all different?\"",
+                        "He let out a warm, gentle laugh. \"Ah, but you are assuming the dance is simple. It is not. It is a symphony. And the distance from the Sun determines each planet's part.\"",
+                        "He pointed to Mercury, zipping around the Sun in a frantic blur. \"That one,\" he said, \"dances very close to the fire. The Sun's gravity is like a powerful, fast-paced rhythm there. To keep from falling in, Mercury must match that rhythm, spinning through its entire year in the time it takes us to experience three months.\"",
+                        "A light went on in my head. \"So… the farther out you go, the quieter the music gets?\"",
+                        "\"Exactly!\" he beamed. \"Look at Saturn, so slow and stately. It feels only a faint whisper of that pull, so it can afford to take its time. A single waltz around the Sun takes it nearly thirty of our years.\"",
+                        "He then taught me the most beautiful part. \"And their paths, Akash, are not perfect circles. They are ellipses—graceful ovals. The Sun is not a strict conductor in the center, but a captivating soloist that the dancers circle. Each planet sways closer, a step called Perihelion, and then farther away, a step called Aphelion. For our Earth, that gentle sway is what gives us our seasons.\"",
+                        "I remember the awe that washed over me. The chaos had resolved into a perfect, elegant order. \"So, they're all dancing to the same song,\" I whispered, \"but each hears it at a different volume, and that dictates their own unique dance.\"",
+                        "\"Yes,\" Professor Vega said, placing a hand on my shoulder. \"A never-ending dance of revolution around the ballroom, and a spin of rotation that gives each dancer its own day and night. It is this perfect, delicate balance that makes our life here possible.\"",
+                        "I looked back at the model, and I didn't see gears and wires anymore. I saw it. I saw the dance. The planets were partners in a billion-year-old ballet, moving in flawless, gravitational harmony.",
+                        "So, when you look up at the sky tonight, don't just see silent dots of light. Listen. Listen with your imagination, and you might just hear the music—the same music that taught a confused boy that the universe is not a place of chaos, but of breathtaking, cosmic grace."
+                    ]
+                },
+                amethyst_promises: {
+                    title: "THE AMETHYST PROMISES",
+                    paragraphs: [
+                        "Narrated by Elara, Chief Archivist of Lyra",
+                        "You want to know about the Amethyst Promises? Ah, pull up a stool, little one. This isn't just a story in a databank. This is my story. I was there. They used to call me Kaelen.",
+                        "Back when I was your age, our world, Lyra, was… quiet. Oh, the soil still shimmered copper, and our two moons still painted the sky lavender. But we had lost the echo of our own past. Our technology hummed along with simple green Peridot crystals, but the great ballads of our history? They were fading, like a star going dim.",
+                        "We had legends, of course. Whispers of the Amethyst Crystals of Promise. It was said they held the entire memory of our planet—every sunrise, every discovery, every struggle. They were our living library. And they were lost.",
+                        "I was a Stone-Singer. I could hear the music of the rocks, the low hum of the planet's energy. It was a fun trick, until the night it wasn't. I was listening deep in the Copper Canyon, and I heard it—a new song. It wasn't a hum. It was a melody, so beautiful and so profoundly sad that it made my heart ache. It was a call. A distress signal written in music, and it was calling to me.",
+                        "That's how it started. Me, my best friend Leo—a boy who could talk to computers like they were old friends—and Zara, a fiery young pilot who wasn't afraid of anything, not even the chaotic asteroid graveyard we called \"The Drift.\"",
+                        "We took the melody to our ship, The Starlight Chaser, and Leo decoded it. His face went pale. \"Kaelen,\" he said, \"this isn't just a song. It's a star chart. The Amethysts… they're not here. They're on a moonlet, trapped in The Drift.\"",
+                        "I can still feel the chill that ran down my spine. The Drift was a navigator's nightmare, a spinning maze of rock and ice where gravity played cruel tricks. But the song… the promise in that song was a pull stronger than any gravity.",
+                        "Zara, fearless as ever, took the controls. \"Then we'll dance through it,\" she said, a wild grin on her face.",
+                        "And dance we did. Leo called out trajectories, using the gravity of the larger asteroids to slingshot us forward. I listened, my ears tuned to the Amethyst's song, guiding Zara through the chaos. The melody was our compass, growing stronger with every near-miss, every dizzying turn. We weren't just flying; we were answering a call that had waited for centuries.",
+                        "When we finally broke through, the sight stole my breath. There it was—a small, icy moonlet glowing with a soft, internal purple light. We had found the Garden of Memory.",
+                        "The moment my boots touched the ground, the song didn't just fill my ears; it flooded my mind. I saw it all. I saw Lyra being born from stardust. I saw our ancestors learning to speak to the crystals. I saw them survive cosmic winters and celebrate a thousand summers. The Amethysts weren't just gems; they were a heartbeat. A record of resilience. The \"Promise\" was their vow to never forget where they came from.",
+                        "But the song held a final, urgent note. The moonlet's orbit was decaying. It was destined to fall into our sun. Our ancestors hadn't meant for us to save the crystals; they'd meant for us to learn from them and carry their wisdom home before it was too late.",
+                        "We couldn't take the great crystals. But at my feet lay a small, perfect shard. As I picked it up, the entire garden seemed to sigh, its lonely call finally transforming into a song of fulfillment. The promise had been kept.",
+                        "So, you see, when you look at the Amethyst shard glowing in the plaza now, you're not just looking at a rock. You're looking at our history. You're looking at a dance through a storm of asteroids, the courage of my friends, and the echo of a song that refused to be forgotten.",
+                        "That is the true Amethyst Promise. It's the promise that we will always look to the stars, not just to find new worlds, but to remember who we are. And that, little one, is a story worth telling and retelling. Now, off to bed. The stars are waiting in your dreams."
+                    ]
+                },
+                imageCaption1: "The Carina Nebula: A massive star-forming region in our galaxy where radiation from newborn stars sculpts the surrounding gas and dust into fantastic shapes.",
+                imageCaption2: "Andromeda Galaxy: Our closest galactic neighbor, on a collision course with the Milky Way in about 4.5 billion years.",
+                imageCaption3: "The Cosmic Dance: An artistic representation of our solar system showing the elegant orbital paths of planets around the Sun.",
+                imageCaption4: "Crystalline Formations: Inspired by the Amethyst Promises story, these natural crystal structures evoke the memory-holding crystals of Lyra.",
+                imageCaption5: "Deep Space: A view of distant galaxies and star clusters, reminding us of the vastness of our universe.",
+                currentLang: "English"
+            },
+            ta: {
+                cosmic_dance: {
+                    title: "பிரபஞ்ச நடனம்",
+                    paragraphs: [
+                        "குழந்தைகளே, மக்கள் அண்டத்தை ஒரு குளிர்ந்த, அமைதியான மற்றும் வெற்றிடமான இடமாக நினைக்கிறார்கள் என்பது உங்களுக்குத் தெரியும். ஆனால் நான் அதை அப்படி பார்த்ததில்லை. எனக்கு, அது எப்போதும் இசையும் இயக்கமும் நிறைந்த ஒரு பெரிய நடன அரங்கமாக இருந்தது. அதற்கு நான் ஒரு நபருக்கு நன்றி சொல்ல வேண்டும்: எனது பழைய நண்பர், பேராசிரியர் வெகா.",
+                        // ... (Tamil translation would continue here)
+                    ]
+                },
+                amethyst_promises: {
+                    title: "அமெதிஸ்ட் வாக்குறுதிகள்",
+                    paragraphs: [
+                        "லைராவின் தலைமை ஆவணக் காப்பாளர் எலாராவால் கூறப்பட்டது",
+                        "அமெதிஸ்ட் வாக்குறுதிகள் பற்றி தெரிந்து கொள்ள வேண்டுமா? ஆ, ஒரு மரக்கட்டை இழுத்து உட்கார், சிறியவனே. இது ஒரு தரவு வங்கியில் உள்ள கதை மட்டுமல்ல. இது என் கதை. நான் அங்கே இருந்தேன். அவர்கள் என்னை கேலன் என்று அழைத்தார்கள்.",
+                        // ... (Tamil translation would continue here)
+                    ]
+                },
+                imageCaption1: "கரினா நெபுலா: நமது விண்மீன் திரளில் ஒரு பாரிய நட்சத்திர-உருவாக்கும் பகுதி, அங்கு புதிதாகப் பிறந்த நட்சத்திரங்களிலிருந்து வரும் கதிர்வீச்சு, சுற்றியுள்ள வாயு மற்றும் தூசியை அற்புதமான வடிவங்களாக உருவாக்குகிறது.",
+                imageCaption2: "அண்ட்ரோமெடா விண்மீன் திரள்: நமது அருகிலுள்ள விண்மீன் திரள், சுமார் 4.5 பில்லியன் ஆண்டுகளில் பால் வழியுடன் மோதும் பாதையில் உள்ளது.",
+                imageCaption3: "பிரபஞ்ச நடனம்: சூரியனைச் சுற்றி கிரகங்களின் நேர்த்தியான சுற்றுப்பாதைகளைக் காட்டும் நமது சூரிய குடும்பத்தின் கலைப் பிரதிநிதித்துவம்.",
+                imageCaption4: "படிக உருவாக்கங்கள்: அமெதிஸ்ட் வாக்குறுதிகள் கதையால் ஈர்க்கப்பட்ட, இந்த இயற்கை படிக கட்டமைப்புகள் லைராவின் நினைவகத்தை வைத்திருக்கும் படிகங்களை வெளிப்படுத்துகின்றன.",
+                imageCaption5: "ஆழ்ந்த விண்வெளி: தொலைதூர விண்மீன் திரள்கள் மற்றும் நட்சத்திரக் கூட்டங்களின் தோற்றம், நமது பிரபஞ்சத்தின் பரந்த அளவை நமக்கு நினைவூட்டுகிறது.",
+                currentLang: "தமிழ் (Tamil)"
+            },
+            hi: {
+                cosmic_dance: {
+                    title: "ब्रह्मांडीय नृत्य",
+                    paragraphs: [
+                        "आप जानते हैं, बच्चों, लोग अक्सर ब्रह्मांड को एक ठंडी, शांत और खाली जगह मानते हैं। लेकिन मैंने इसे कभी ऐसा नहीं देखा। मेरे लिए, यह हमेशा से संगीत और गति से भरा एक भव्य बॉलरूम रहा है। और इसके लिए मैं एक व्यक्ति का शुक्रिया अदा करता हूं: मेरे पुराने दोस्त, प्रोफेसर वेगा।",
+                        // ... (Hindi translation would continue here)
+                    ]
+                },
+                amethyst_promises: {
+                    title: "एमेथिस्ट वादे",
+                    paragraphs: [
+                        "लाइरा के मुख्य अभिलेखागार एलारा द्वारा सुनाया गया",
+                        "आप एमेथिस्ट वादों के बारे में जानना चाहते हैं? आह, एक स्टूल खींचो, छोटे। यह सिर्फ एक डेटाबैंक में एक कहानी नहीं है। यह मेरी कहानी है। मैं वहाँ था। वे मुझे कैलेन कहते थे।",
+                        // ... (Hindi translation would continue here)
+                    ]
+                },
+                imageCaption1: "करीना नेबुला: हमारी आकाशगंगा में एक विशाल तारा-निर्माण क्षेत्र जहां नवजात तारों से विकिरण आसपास की गैस और धूल को शानदार आकार में बदल देती है।",
+                imageCaption2: "एंड्रोमेडा आकाशगंगा: हमारी निकटतम आकाशगंगा, लगभग 4.5 अरब वर्षों में आकाशगंगा के साथ टकराव के पाठ्यक्रम पर।",
+                imageCaption3: "ब्रह्मांडीय नृत्य: हमारे सौर मंडल का एक कलात्मक प्रतिनिधित्व जो सूर्य के चारों ओर ग्रहों के सुरुचिपूर्ण कक्षीय पथों को दर्शाता है।",
+                imageCaption4: "क्रिस्टलीय संरचनाएं: एमेथिस्ट वादों की कहानी से प्रेरित, ये प्राकृतिक क्रिस्टल संरचनाएं लाइरा की स्मृति रखने वाले क्रिस्टल को याद दिलाती हैं।",
+                imageCaption5: "गहरा अंतरिक्ष: दूर की आकाशगंगाओं और तारा समूहों का दृश्य, जो हमें हमारे ब्रह्मांड की विशालता की याद दिलाता है।",
+                currentLang: "हिन्दी (Hindi)"
+            }
+        };
+        
+        // Current language and story
+        let currentLanguage = 'en';
+        let currentStory = 'cosmic_dance';
+        
+        // Text-to-speech variables
+        let speechSynthesis = window.speechSynthesis;
+        let currentUtterance = null;
+        
+        // Switch between content types
+        document.getElementById('textBtn').addEventListener('click', function() {
+            switchContent('textContent');
+            setActiveButton(this);
+        });
+        
+        document.getElementById('videoBtn').addEventListener('click', function() {
+            switchContent('videoContent');
+            setActiveButton(this);
+        });
+        
+        document.getElementById('imageBtn').addEventListener('click', function() {
+            switchContent('imageContent');
+            setActiveButton(this);
+        });
+        
+        document.getElementById('languageBtn').addEventListener('click', function() {
+            switchContent('languageContent');
+            setActiveButton(this);
+        });
+        
+        function switchContent(contentId) {
+            // Hide all content
+            const allContent = document.querySelectorAll('.story-content');
+            allContent.forEach(content => {
+                content.classList.remove('active-content');
+            });
+            
+            // Show selected content
+            document.getElementById(contentId).classList.add('active-content');
+            
+            // Stop TTS if playing
+            stopTTS();
+        }
+        
+        function setActiveButton(activeBtn) {
+            // Remove active class from all buttons
+            const allButtons = document.querySelectorAll('.control-btn');
+            allButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            activeBtn.classList.add('active');
+        }
+        
+        // Story selection
+        document.querySelectorAll('.story-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const story = this.getAttribute('data-story');
+                
+                // Update active story option
+                document.querySelectorAll('.story-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Change story
+                changeStory(story);
+            });
+        });
+        
+        function changeStory(story) {
+            currentStory = story;
+            
+            // Hide all stories
+            document.querySelectorAll('.text-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Show selected story
+            document.getElementById(story).style.display = 'block';
+            
+            // Update content if language is not English
+            if (currentLanguage !== 'en') {
+                updateStoryContent();
+            }
+            
+            // Stop TTS if playing
+            stopTTS();
+        }
+        
+        function updateStoryContent() {
+            const storyData = languageData[currentLanguage][currentStory];
+            
+            // Update title and paragraphs
+            const storyElement = document.getElementById(currentStory);
+            storyElement.querySelector('h2').textContent = storyData.title;
+            
+            const paragraphs = storyElement.querySelectorAll('p');
+            storyData.paragraphs.forEach((para, index) => {
+                if (paragraphs[index]) {
+                    paragraphs[index].textContent = para;
+                }
+            });
+        }
+        
+        // Language selection
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                
+                // Update active language option
+                document.querySelectorAll('.language-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Change language
+                changeLanguage(lang);
+            });
+        });
+        
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update text content
+            document.getElementById('currentLangDisplay').textContent = languageData[lang].currentLang;
+            
+            // Update image captions
+            document.querySelectorAll('.image-caption').forEach((caption, index) => {
+                caption.textContent = languageData[lang][`imageCaption${index + 1}`];
+            });
+            
+            // Update story content if text story is active
+            if (document.getElementById('textContent').classList.contains('active-content')) {
+                updateStoryContent();
+            }
+            
+            // Stop TTS if playing
+            stopTTS();
+        }
+        
+        // Team Members Modal
+        document.getElementById('teamMembersBtn').addEventListener('click', function() {
+            document.getElementById('teamModal').style.display = 'flex';
+        });
+        
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('teamModal').style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('teamModal')) {
+                document.getElementById('teamModal').style.display = 'none';
+            }
+        });
+        
+        // Accessibility features
+        
+        // High contrast mode
+        document.getElementById('highContrastBtn').addEventListener('click', function() {
+            document.body.classList.toggle('high-contrast');
+            this.classList.toggle('active');
+        });
+        
+        // Font size adjustment
+        document.getElementById('increaseFontBtn').addEventListener('click', function() {
+            changeFontSize(1);
+        });
+        
+        document.getElementById('decreaseFontBtn').addEventListener('click', function() {
+            changeFontSize(-1);
+        });
+        
+        function changeFontSize(direction) {
+            const currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+            const newSize = currentSize + (direction * 2);
+            document.body.style.fontSize = `${newSize}px`;
+        }
+        
+        // Read aloud functionality
+        document.getElementById('readAloudBtn').addEventListener('click', function() {
+            readPageContent();
+        });
+        
+        function readPageContent() {
+            const activeContent = document.querySelector('.story-content.active-content');
+            let textToRead = '';
+            
+            if (activeContent.id === 'textContent') {
+                // Read the current story
+                const currentStoryElement = document.getElementById(currentStory);
+                textToRead = currentStoryElement.textContent;
+            } else if (activeContent.id === 'imageContent') {
+                // Read image captions
+                const captions = activeContent.querySelectorAll('.image-caption');
+                captions.forEach(caption => {
+                    textToRead += caption.textContent + '. ';
+                });
+            } else if (activeContent.id === 'languageContent') {
+                // Read language options
+                textToRead = 'Language selection. Choose from English, Tamil, or Hindi.';
+            } else if (activeContent.id === 'videoContent') {
+                textToRead = 'Video content. Two space exploration videos are available.';
+            }
+            
+            if (textToRead) {
+                speakText(textToRead);
+            }
+        }
+        
+        // Text-to-speech controls
+        document.getElementById('playTTS').addEventListener('click', function() {
+            const activeContent = document.querySelector('.story-content.active-content');
+            
+            if (activeContent.id === 'textContent') {
+                const currentStoryElement = document.getElementById(currentStory);
+                const textToRead = currentStoryElement.textContent;
+                speakText(textToRead);
+            }
+        });
+        
+        document.getElementById('pauseTTS').addEventListener('click', function() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.pause();
+                updateTTSButtons(false, true, true);
+            }
+        });
+        
+        document.getElementById('stopTTS').addEventListener('click', function() {
+            stopTTS();
+        });
+        
+        function speakText(text) {
+            // Stop any ongoing speech
+            stopTTS();
+            
+            // Create new utterance
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            
+            // Set language based on current selection
+            if (currentLanguage === 'en') {
+                currentUtterance.lang = 'en-US';
+            } else if (currentLanguage === 'ta') {
+                currentUtterance.lang = 'ta-IN';
+            } else if (currentLanguage === 'hi') {
+                currentUtterance.lang = 'hi-IN';
+            }
+            
+            // Event listeners for the utterance
+            currentUtterance.onstart = function() {
+                updateTTSButtons(true, false, false);
+            };
+            
+            currentUtterance.onend = function() {
+                updateTTSButtons(false, true, true);
+            };
+            
+            currentUtterance.onerror = function() {
+                updateTTSButtons(false, true, true);
+            };
+            
+            // Speak the text
+            speechSynthesis.speak(currentUtterance);
+        }
+        
+        function stopTTS() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+            updateTTSButtons(false, true, true);
+        }
+        
+        function updateTTSButtons(playing, playEnabled, pauseStopEnabled) {
+            document.getElementById('playTTS').disabled = !playEnabled;
+            document.getElementById('pauseTTS').disabled = pauseStopEnabled;
+            document.getElementById('stopTTS').disabled = pauseStopEnabled;
+            
+            if (playing) {
+                document.getElementById('playTTS').innerHTML = '<i class="fas fa-play"></i> Reading...';
+            } else {
+                document.getElementById('playTTS').innerHTML = '<i class="fas fa-play"></i> Read Story Aloud';
+            }
+        }
+        
+        // Initialize
+        createStars();
+    </script>
+</body>
+</html>
